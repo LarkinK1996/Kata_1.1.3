@@ -19,17 +19,19 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
+
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
             session.createSQLQuery
                 ("CREATE TABLE IF NOT EXISTS Users (id SERIAL PRIMARY KEY AUTO_INCREMENT," +
-                "name VARCHAR(20),lastname VARCHAR(20),age INT)").executeUpdate();
+                    "name VARCHAR(20),lastname VARCHAR(20),age INT)").executeUpdate();
             session.getTransaction().commit();
         }
     }
 
     @Override
     public void dropUsersTable() {
+
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS Users").executeUpdate();
@@ -39,6 +41,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
+
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
             session.save(new User(name, lastName, age));
@@ -55,14 +58,14 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(user);
             session.getTransaction().commit();
         }
-
     }
 
     @Override
     public List<User> getAllUsers() {
+
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            List<User> users = session.createQuery("from User", User.class).list();
+            List<User> users = session.createQuery("from User ", User.class).list();
             session.getTransaction().commit();
             return users;
         }
@@ -70,10 +73,12 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
+
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.createQuery("DELETE FROM User user").executeUpdate();
+            session.createQuery("DELETE FROM User").executeUpdate();
             session.getTransaction().commit();
         }
     }
 }
+

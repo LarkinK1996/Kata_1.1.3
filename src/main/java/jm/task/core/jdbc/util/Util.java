@@ -15,9 +15,8 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/testDB";
 
 
-    private static SessionFactory sessionFactory;
-
     public static SessionFactory getSessionFactory() {
+
         Configuration configuration = new Configuration();
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -27,7 +26,7 @@ public class Util {
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.current_session_context_class", "thread");
 
-        return sessionFactory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
+        return configuration.addAnnotatedClass(User.class).buildSessionFactory();
     }
 
 
