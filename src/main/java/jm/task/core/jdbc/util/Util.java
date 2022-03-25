@@ -1,6 +1,9 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,24 +14,33 @@ public class Util {
     private static final String PASSWORD = "gfhjkmbd1900";
     private static final String URL = "jdbc:mysql://localhost:3306/testDB";
 
-    static BasicDataSource ds = new BasicDataSource();
 
-    private static void connectDataBase() {
-        ds.setUrl(URL);
-        ds.setUsername(USERNAME);
-        ds.setPassword(PASSWORD);
+    private static SessionFactory sessionFactory;
+
+    public static SessionFactory getSessionFactory() {
+        Configuration configuration = new Configuration();
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", URL);
+        configuration.setProperty("hibernate.connection.username", USERNAME);
+        configuration.setProperty("hibernate.connection.password", PASSWORD);
+        configuration.setProperty("hibernate.show_sql", "true");
+        configuration.setProperty("hibernate.current_session_context_class", "thread");
+
+        return sessionFactory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
     }
 
+
     public static Connection getConnection() {
-        connectDataBase();
-        Connection connection = null;
-        try {
-            connection = ds.getConnection();
-            System.out.println("Connection is ok");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (BasicDataSource ds = new BasicDataSource()) {
+            ds.setUrl(URL);
+            ds.setUsername(USERNAME);
+            ds.setPassword(PASSWORD);
+            return ds.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return connection;
+        return null;
     }
 }
 

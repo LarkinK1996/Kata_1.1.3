@@ -1,5 +1,6 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
         userService.saveUser("Anna", "Ivanova", (byte) 22);
         userService.saveUser("Patric", "Vasilev", (byte) 23);
         userService.saveUser("Stive", "Pupkin", (byte) 24);
-        System.out.println(userService.getAllUsers());
+        userService.getAllUsers().forEach(System.out::println);
         userService.cleanUsersTable();
         userService.dropUsersTable();
     }
