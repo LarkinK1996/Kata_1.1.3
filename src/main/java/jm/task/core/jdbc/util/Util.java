@@ -14,21 +14,22 @@ public class Util {
     private static final String PASSWORD = "gfhjkmbd1900";
     private static final String URL = "jdbc:mysql://localhost:3306/testDB";
 
+    private static SessionFactory factory;
 
     public static SessionFactory getSessionFactory() {
 
-        Configuration configuration = new Configuration();
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", URL);
-        configuration.setProperty("hibernate.connection.username", USERNAME);
-        configuration.setProperty("hibernate.connection.password", PASSWORD);
-        configuration.setProperty("hibernate.show_sql", "true");
-        configuration.setProperty("hibernate.current_session_context_class", "thread");
+            Configuration configuration = new Configuration();
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+            configuration.setProperty("hibernate.connection.url", URL);
+            configuration.setProperty("hibernate.connection.username", USERNAME);
+            configuration.setProperty("hibernate.connection.password", PASSWORD);
+            configuration.setProperty("hibernate.show_sql", "true");
+            configuration.setProperty("hibernate.current_session_context_class", "thread");
+            factory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
 
-        return configuration.addAnnotatedClass(User.class).buildSessionFactory();
+        return factory;
     }
-
 
     public static Connection getConnection() {
         try (BasicDataSource ds = new BasicDataSource()) {
