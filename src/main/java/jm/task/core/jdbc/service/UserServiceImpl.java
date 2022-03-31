@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
+    private UserDaoHibernateImpl userDaoJDBC = new UserDaoHibernateImpl();
 
     public void createUsersTable() {
         userDaoJDBC.createUsersTable();

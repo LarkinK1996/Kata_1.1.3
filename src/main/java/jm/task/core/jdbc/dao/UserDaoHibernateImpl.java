@@ -30,6 +30,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "name VARCHAR(20),lastname VARCHAR(20),age INT)").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -45,6 +46,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery("DROP TABLE IF EXISTS Users").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -60,6 +62,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.save(new User(name, lastName, age));
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -75,6 +78,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(user);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -91,6 +95,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             return users;
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -107,6 +112,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery("TRUNCATE TABLE users").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }

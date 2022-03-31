@@ -16,18 +16,27 @@ public class Util {
 
     private static SessionFactory factory;
 
+    static {
+        buildSessionFactory();
+    }
+
+    private Util() {
+
+    }
+
+    private static void buildSessionFactory() {
+        Configuration configuration = new Configuration();
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", URL);
+        configuration.setProperty("hibernate.connection.username", USERNAME);
+        configuration.setProperty("hibernate.connection.password", PASSWORD);
+        configuration.setProperty("hibernate.show_sql", "true");
+        configuration.setProperty("hibernate.current_session_context_class", "thread");
+        factory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
+    }
+
     public static SessionFactory getSessionFactory() {
-
-            Configuration configuration = new Configuration();
-            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-            configuration.setProperty("hibernate.connection.url", URL);
-            configuration.setProperty("hibernate.connection.username", USERNAME);
-            configuration.setProperty("hibernate.connection.password", PASSWORD);
-            configuration.setProperty("hibernate.show_sql", "true");
-            configuration.setProperty("hibernate.current_session_context_class", "thread");
-            factory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
-
         return factory;
     }
 
