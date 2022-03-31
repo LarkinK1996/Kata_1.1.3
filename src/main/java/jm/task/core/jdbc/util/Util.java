@@ -16,10 +16,6 @@ public class Util {
 
     private static SessionFactory factory;
 
-    static {
-        buildSessionFactory();
-    }
-
     private Util() {
 
     }
@@ -37,6 +33,9 @@ public class Util {
     }
 
     public static SessionFactory getSessionFactory() {
+        if (factory == null) {
+            buildSessionFactory();
+        }
         return factory;
     }
 
