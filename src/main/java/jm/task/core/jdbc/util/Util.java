@@ -15,9 +15,17 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/testDB";
 
     private static SessionFactory factory;
+    private static Util INSTANCE;
 
     private Util() {
 
+    }
+
+    public static Util getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Util();
+        }
+        return INSTANCE;
     }
 
     private static void buildSessionFactory() {
@@ -32,7 +40,7 @@ public class Util {
         factory = configuration.addAnnotatedClass(User.class).buildSessionFactory();
     }
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         if (factory == null) {
             buildSessionFactory();
         }
